@@ -1,0 +1,35 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - KeychainAccess (4.2.2)
+  - yic_device_info (0.0.1):
+    - Flutter
+    - KeychainAccess (= 4.2.2)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - yic_device_info (from `.symlinks/plugins/yic_device_info/ios`)
+
+SPEC REPOS:
+  trunk:
+    - KeychainAccess
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  yic_device_info:
+    :path: ".symlinks/plugins/yic_device_info/ios"
+
+SPEC CHECKSUMS:
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  yic_device_info: 4c0f32cdafa8e365dc8f8c5f39ed6a8cb838f5f4
+
+PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
+
+COCOAPODS: 1.16.2
