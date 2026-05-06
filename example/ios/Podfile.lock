@@ -28,7 +28,7 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
   KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
-  yic_device_info: 4c0f32cdafa8e365dc8f8c5f39ed6a8cb838f5f4
+  yic_device_info: 64a0ca7da3e21a19633d6652379bb0dce84901d5
 
 PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
 
