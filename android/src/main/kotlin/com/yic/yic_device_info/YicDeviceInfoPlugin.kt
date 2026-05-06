@@ -34,14 +34,11 @@ class YicDeviceInfoPlugin :
         when (call.method) {
             "getPlatformVersion" -> result.success("Android ${android.os.Build.VERSION.RELEASE}")
             "deviceModel" -> result.success(Build.MODEL)
-            "identifier" -> {
-                val context = applicationContext
-                if (context == null) {
-                    result.error("missing_context", "Application context is unavailable.", null)
-                } else {
-                    result.success(identifier(context))
-                }
-            }
+            "version" -> handleWithContext(result) { context -> version(context) }
+            "buildNumber" -> handleWithContext(result) { context -> buildNumber(context) }
+            "bundleIdentifier" -> handleWithContext(result) { context -> context.packageName }
+            "appName" -> handleWithContext(result) { context -> appName(context) }
+            "identifier" -> handleWithContext(result) { context -> identifier(context) }
             else -> result.notImplemented()
         }
     }
@@ -49,6 +46,18 @@ class YicDeviceInfoPlugin :
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         applicationContext = null
+    }
+
+    private fun handleWithContext(
+        result: Result,
+        value: (Context) -> String
+    ) {
+        val context = applicationContext
+        if (context == null) {
+            result.error("missing_context", "Application context is unavailable.", null)
+        } else {
+            result.success(value(context))
+        }
     }
 
     private fun identifier(context: Context): String {
@@ -62,5 +71,25 @@ class YicDeviceInfoPlugin :
         val unique = UUID.randomUUID().toString()
         preferences.edit().putString(key, unique).apply()
         return unique
+    }
+
+    private fun version(context: Context): String {
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+        return packageInfo.versionName ?: ""
+    }
+
+    private fun buildNumber(context: Context): String {
+        val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            packageInfo.longVersionCode.toString()
+        } else {
+            @Suppress("DEPRECATION")
+            packageInfo.versionCode.toString()
+        }
+    }
+
+    private fun appName(context: Context): String {
+        val applicationInfo = context.applicationInfo
+        return context.packageManager.getApplicationLabel(applicationInfo).toString()
     }
 }

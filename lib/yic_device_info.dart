@@ -12,4 +12,20 @@ class YicDeviceInfo {
   Future<String?> deviceModel() {
     return YicDeviceInfoPlatform.instance.deviceModel();
   }
+
+  Future<String?> version() {
+    return YicDeviceInfoPlatform.instance.version();
+  }
+
+  Future<String?> buildNumber() {
+    return YicDeviceInfoPlatform.instance.buildNumber();
+  }
+
+  Future<String?> bundleIdentifier() {
+    return YicDeviceInfoPlatform.instance.bundleIdentifier();
+  }
+
+  Future<String?> appName() {
+    return YicDeviceInfoPlatform.instance.appName();
+  }
 }

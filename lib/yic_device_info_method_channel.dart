@@ -9,23 +9,43 @@ class MethodChannelYicDeviceInfo extends YicDeviceInfoPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('yic_device_info');
 
-  @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>(
-      'getPlatformVersion',
-    );
-    return version;
+  Future<String?> _invokeStringMethod(String method) async {
+    final value = await methodChannel.invokeMethod<Object?>(method);
+    return value?.toString();
   }
 
   @override
-  Future<String?> identifier() async {
-    final identifier = await methodChannel.invokeMethod<String>('identifier');
-    return identifier;
+  Future<String?> getPlatformVersion() {
+    return _invokeStringMethod('getPlatformVersion');
   }
 
   @override
-  Future<String?> deviceModel() async {
-    final deviceModel = await methodChannel.invokeMethod<String>('deviceModel');
-    return deviceModel;
+  Future<String?> identifier() {
+    return _invokeStringMethod('identifier');
+  }
+
+  @override
+  Future<String?> deviceModel() {
+    return _invokeStringMethod('deviceModel');
+  }
+
+  @override
+  Future<String?> version() {
+    return _invokeStringMethod('version');
+  }
+
+  @override
+  Future<String?> buildNumber() {
+    return _invokeStringMethod('buildNumber');
+  }
+
+  @override
+  Future<String?> bundleIdentifier() {
+    return _invokeStringMethod('bundleIdentifier');
+  }
+
+  @override
+  Future<String?> appName() {
+    return _invokeStringMethod('appName');
   }
 }
