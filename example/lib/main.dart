@@ -18,6 +18,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   String _identifier = 'Unknown';
+  String _androidId = 'Unknown';
+  String _channelName = 'Unknown';
   String _deviceModel = 'Unknown';
 
   String _version = "Unknown";
@@ -47,6 +49,10 @@ class _MyAppState extends State<MyApp> {
                 const SizedBox(height: 16),
                 Text('设备标识: $_identifier'),
                 const SizedBox(height: 8),
+                Text('Android ID: $_androidId'),
+                const SizedBox(height: 8),
+                Text('渠道名: $_channelName'),
+                const SizedBox(height: 8),
                 Text('设备型号: $_deviceModel'),
                 const SizedBox(height: 8),
                 Text('Version: $_version'),
@@ -60,6 +66,14 @@ class _MyAppState extends State<MyApp> {
                   child: const Text('获取设备标识'),
                 ),
                 const SizedBox(height: 12),
+                ElevatedButton(
+                  onPressed: getAndroidId,
+                  child: const Text('获取Android ID'),
+                ),
+                ElevatedButton(
+                  onPressed: getChannelName,
+                  child: const Text('获取渠道名'),
+                ),
                 ElevatedButton(
                   onPressed: getDeviceModel,
                   child: const Text('获取设备型号'),
@@ -121,6 +135,39 @@ class _MyAppState extends State<MyApp> {
 
     setState(() {
       _identifier = identifier;
+    });
+  }
+
+  /// Android ID
+  Future<void> getAndroidId() async {
+    String androidId;
+    try {
+      androidId = await _yicDeviceInfoPlugin.androidId() ?? 'Unknown androidId';
+    } on PlatformException {
+      androidId = 'Failed to get androidId.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _androidId = androidId;
+    });
+  }
+
+  /// 渠道名
+  Future<void> getChannelName() async {
+    String channelName;
+    try {
+      channelName =
+          await _yicDeviceInfoPlugin.channelName() ?? 'Unknown channelName';
+    } on PlatformException {
+      channelName = 'Failed to get channelName.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _channelName = channelName;
     });
   }
 

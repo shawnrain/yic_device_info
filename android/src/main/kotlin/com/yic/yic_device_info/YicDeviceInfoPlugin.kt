@@ -1,7 +1,9 @@
 package com.yic.yic_device_info
 
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
+import android.provider.Settings
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -39,6 +41,8 @@ class YicDeviceInfoPlugin :
             "bundleIdentifier" -> handleWithContext(result) { context -> context.packageName }
             "appName" -> handleWithContext(result) { context -> appName(context) }
             "identifier" -> handleWithContext(result) { context -> identifier(context) }
+            "androidId" -> handleWithContext(result) { context -> androidId(context) }
+            "channelName" -> handleWithContext(result) { context -> channelName(context) }
             else -> result.notImplemented()
         }
     }
@@ -71,6 +75,36 @@ class YicDeviceInfoPlugin :
         val unique = UUID.randomUUID().toString()
         preferences.edit().putString(key, unique).apply()
         return unique
+    }
+
+    private fun androidId(context: Context): String {
+        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) ?: ""
+    }
+
+    @Suppress("DEPRECATION")
+    private fun channelName(context: Context): String {
+        val applicationInfo =
+            context.packageManager.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
+        val metaData = applicationInfo.metaData ?: return ""
+        val keys =
+            listOf(
+                "YIC_CHANNEL",
+                "CHANNEL_NAME",
+                "CHANNEL",
+                "channelName",
+                "channel",
+                "UMENG_CHANNEL",
+                "APP_CHANNEL"
+            )
+
+        for (key in keys) {
+            val value = metaData.get(key)?.toString()?.trim()
+            if (!value.isNullOrEmpty() && !value.startsWith("$(")) {
+                return value
+            }
+        }
+
+        return ""
     }
 
     private fun version(context: Context): String {

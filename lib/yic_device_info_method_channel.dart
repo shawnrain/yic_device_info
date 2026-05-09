@@ -25,6 +25,16 @@ class MethodChannelYicDeviceInfo extends YicDeviceInfoPlatform {
   }
 
   @override
+  Future<String?> androidId() {
+    return _invokeStringMethod('androidId');
+  }
+
+  @override
+  Future<String?> channelName() {
+    return _invokeStringMethod('channelName');
+  }
+
+  @override
   Future<String?> deviceModel() {
     return _invokeStringMethod('deviceModel');
   }

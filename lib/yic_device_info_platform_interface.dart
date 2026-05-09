@@ -31,6 +31,14 @@ abstract class YicDeviceInfoPlatform extends PlatformInterface {
     throw UnimplementedError('identifier() has not been implemented.');
   }
 
+  Future<String?> androidId() {
+    throw UnimplementedError('androidId() has not been implemented.');
+  }
+
+  Future<String?> channelName() {
+    throw UnimplementedError('channelName() has not been implemented.');
+  }
+
   Future<String?> deviceModel() {
     throw UnimplementedError('deviceModel() has not been implemented.');
   }

@@ -20,6 +20,10 @@ public class YicDeviceInfoPlugin: NSObject, FlutterPlugin {
       result("iOS " + UIDevice.current.systemVersion)
     case "identifier":
       result(Self.identifier())
+    case "androidId":
+      result("")
+    case "channelName":
+      result(Self.channelName())
     case "deviceModel":
       result(Self.deviceModel())
     case "version":
@@ -92,5 +96,17 @@ public class YicDeviceInfoPlugin: NSObject, FlutterPlugin {
     return infoDictionary?["CFBundleDisplayName"] as? String
       ?? infoDictionary?["CFBundleName"] as? String
       ?? ""
+  }
+
+  static func channelName() -> String {
+    let keys = ["YIC_CHANNEL", "CHANNEL_NAME", "CHANNEL", "channelName", "channel", "UMENG_CHANNEL", "APP_CHANNEL"]
+    for key in keys {
+      let value = bundleString(for: key)
+      if !value.isEmpty {
+        return value
+      }
+    }
+
+    return ""
   }
 }

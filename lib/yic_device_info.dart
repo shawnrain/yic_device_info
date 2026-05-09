@@ -9,6 +9,14 @@ class YicDeviceInfo {
     return YicDeviceInfoPlatform.instance.identifier();
   }
 
+  Future<String?> androidId() {
+    return YicDeviceInfoPlatform.instance.androidId();
+  }
+
+  Future<String?> channelName() {
+    return YicDeviceInfoPlatform.instance.channelName();
+  }
+
   Future<String?> deviceModel() {
     return YicDeviceInfoPlatform.instance.deviceModel();
   }
